@@ -30,8 +30,10 @@ class TaskController extends Controller
         $tasks_model = Task::with('user');
         $tasks = $tasks_model->where('user_id',$request->user()->id)->get();
 
-        //print_r($tasks);
 
+        //dd($tasks);
+
+        // 블레이드 파일 , 변수
         return view('tasks', [
             'tasks' => $tasks,
         ]);

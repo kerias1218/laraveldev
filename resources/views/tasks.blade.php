@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+
+
+
+   <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -53,7 +56,10 @@
                             <tbody>
                             @foreach ($tasks as $task)
                                 <tr>
-                                    <td class="table-text"><div>{{ $task->name }}</div></td>
+                                    <td class="table-text">
+                                        <div>{{ $task->created_at }}</div>
+                                        <div>{{ $task->name }}</div>
+                                    </td>
 
                                     <!-- Task Delete Button -->
                                     <td>
