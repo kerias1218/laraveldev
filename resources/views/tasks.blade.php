@@ -4,6 +4,8 @@
 
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
    <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
             <div class="panel panel-default">
@@ -15,7 +17,36 @@
                     <!-- Display Validation Errors -->
                     @include('common.errors')
 
-                            <!-- New Task Form -->
+
+                    <!-- 수정 -->
+                    @if($task)
+
+                            <form action="" method="POST">
+                                {{ csrf_field() }}
+                                {{ method_field('put') }}
+
+                                <div class="form-group">
+                                    <label for="task-name" class="col-sm-3 control-label">Task</label>
+
+                                    <div class="col-sm-6">
+                                        <input type="text" name="name" id="task-name" class="form-control" value="{{ $task->name }}">
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group" id="addBtn">
+                                    <div class="col-sm-offset-3 col-sm-6">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fa fa-btn fa-plus"></i>Edit Task
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                    @else
+
+                    <!-- New Task Form -->
                     <form action="{{ url('tasks') }}" method="POST" class="form-horizontal">
                         {{ csrf_field() }}
 
@@ -29,14 +60,16 @@
                         </div>
 
                         <!-- Add Task Button -->
-                        <div class="form-group">
+                        <div class="form-group" id="addBtn">
                             <div class="col-sm-offset-3 col-sm-6">
                                 <button type="submit" class="btn btn-default">
                                     <i class="fa fa-btn fa-plus"></i>Add Task
                                 </button>
                             </div>
                         </div>
+
                     </form>
+                    @endif
                 </div>
             </div>
 
@@ -67,6 +100,13 @@
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
 
+
+                                            {{--
+                                            <button type="button" id="btnModify" onClick="modify('{{ $task->id }}','{{ $task->name }}')" class="btn btn-info">
+                                                <i class="fa fa-btn fa-trash"></i>Modify
+                                            </button>
+                                            --}}
+                                            <a href="{{ url('tasks/'.$task->id) }}" class="btn btn-info"><i class="fa fa-btn fa-trash"></i>Modify</a>
                                             <button type="submit" id="delete-task-{{ $task->id }}" class="btn btn-danger">
                                                 <i class="fa fa-btn fa-trash"></i>Delete
                                             </button>
@@ -81,4 +121,7 @@
             @endif
         </div>
     </div>
+
+
+
 @endsection

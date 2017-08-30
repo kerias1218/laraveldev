@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use Illuminate\Http\Request;
 use App\Repositories\TaskRepository;
-use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -36,8 +36,16 @@ class TaskController extends Controller
         // 블레이드 파일 , 변수
         return view('tasks', [
             'tasks' => $tasks,
+            'task'  => '',
         ]);
 
+    }
+
+    public function show(Task $task) {
+
+        $tasks = Auth::user()->tasks()->get();
+
+        return view('tasks', ['task'=>$task, 'tasks'=>$tasks]);
     }
 
     public function store(Request $request) {
@@ -59,5 +67,18 @@ class TaskController extends Controller
         $task->delete();
         return redirect('/tasks');
 
+    }
+
+    public function update(Request $request, $id) {
+
+        //분석 해야 할것.
+
+        $task = Task::find($id);
+
+        $task->name = $request->input('name');
+
+        $task->save();
+
+        return redirect('/tasks/'.$id);
     }
 }
