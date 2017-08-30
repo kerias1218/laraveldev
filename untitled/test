@@ -1,0 +1,65 @@
+<?php
+
+class DogDoor {
+	private $open;
+
+	public function __construct() {
+		$this->open = false;
+	}
+
+	public function open() {
+		echo "집 문이 열립니다. <Br>";
+		$this->open = true;
+	}
+
+	public function close() {
+		echo "집 문이 닫혀요. <br>";
+		$this->open = false;
+	}
+
+	public function isOpen() {
+		return $this->open;
+	}
+}
+
+
+class Remote {
+	private $door;
+
+	public function __construct($door) {
+		$this->door = $door;
+	}
+
+	public function pressButton() {
+		echo "리모콘 버튼이 눌렸어요. <Br>";
+
+
+		if( $this->door->isOpen() ) { //문이 열려있을때 문닫는 코드
+			$this->door->close();
+		}
+		else {
+			$this->door->open();
+		}
+	}
+}
+
+class BarkRecongnizer {
+	private $door;
+
+	public function __construct($door){
+		$this->door = $door;
+	}
+	public function recognize($bark) {
+		echo "강아지가 짖어요.. ".$bark.'<br>';
+		$this->door->open();
+	}
+}
+
+
+
+$door = new DogDoor();
+
+$recognizer = new BarkRecongnizer($door);
+$remote = new Remote($door);
+
+$recognizer->recognize('멍멍');
